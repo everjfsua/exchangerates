@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { TrendingUp, RefreshCw, ArrowRightLeft, Calendar, DollarSign } from 'lucide-react'
 import Chatbot from '@/components/Chatbot'
 
@@ -26,7 +26,7 @@ export default function Home() {
 
   const popularCurrencies = ['USD', 'EUR', 'GBP', 'JPY', 'CAD', 'AUD', 'CHF', 'CNY']
 
-  const fetchExchangeRates = async () => {
+  const fetchExchangeRates = useCallback(async () => {
     setLoading(true)
     try {
       const response = await fetch(`https://api.exchangerate-api.com/v4/latest/${baseCurrency}`)
@@ -38,7 +38,7 @@ export default function Home() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [baseCurrency])
 
   const fetchHistoricalRates = async () => {
     setHistoricalLoading(true)
@@ -75,7 +75,7 @@ export default function Home() {
 
   useEffect(() => {
     fetchExchangeRates()
-  }, [baseCurrency])
+  }, [baseCurrency, fetchExchangeRates])
 
   useEffect(() => {
     if (rates[targetCurrency] && amount) {
@@ -262,7 +262,7 @@ export default function Home() {
           ) : (
             <div className="text-center py-12 text-gray-500">
               <Calendar className="w-12 h-12 mx-auto mb-3 opacity-50" />
-              <p>Click "Load Historical" to view past exchange rates</p>
+              <p>Click &quot;Load Historical&quot; to view past exchange rates</p>
               <p className="text-sm mt-2">
                 Note: Historical data is simulated for demonstration purposes
               </p>

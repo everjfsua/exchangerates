@@ -13,7 +13,7 @@ export default function Chatbot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: 'Hello! I\'m your currency exchange assistant. Ask me anything about exchange rates, currencies, or financial markets!'
+      content: "Hello! I'm your currency exchange assistant. Ask me anything about exchange rates, currencies, or financial markets!"
     }
   ])
   const [input, setInput] = useState('')
